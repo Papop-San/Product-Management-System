@@ -27,12 +27,3 @@
 | Database | PostgreSQL |
 | Tooling | ESLint, Prettier, Nodemon (backend), React Hook Form (frontend) |
 
----
-
-## 🚀 การติดตั้งและรันโปรเจกต์
-
-### 1. Clone โปรเจกต์
-
-```bash
-git clone https://github.com/your-username/product-management-system.git
-cd product-management-system
