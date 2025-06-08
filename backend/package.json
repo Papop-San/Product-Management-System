@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-   "dev": "ts-node-dev src/index.ts",
+    "dev": "ts-node-dev src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
@@ -21,6 +21,7 @@
     "prisma": "^6.9.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.30",

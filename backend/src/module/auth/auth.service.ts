@@ -34,28 +34,35 @@ export class AuthService {
   }
 
   async loginUser(data: LoginUserDTO): Promise<LoginResponseDTO> {
+    // 🔧 ตรวจสอบก่อนว่าผู้ใช้ส่งอะไรมาบ้าง
+    if (!data.emailOrUser || !data.password) {
+      throw new Error('Email or Username and password are required');
+    }
+  
+    // ✅ ดึง user จาก email หรือ user_name
     const user = await this.prisma.users.findFirst({
       where: {
         OR: [
-          { email: data.emailOrUser },
-          { user_name: data.emailOrUser },
+          { email: data.emailOrUser },       
+          { user_name: data.emailOrUser }
         ],
       },
     });
-
+  
     if (!user) throw new Error('Invalid credentials');
-
+  
     const valid = await bcrypt.compare(data.password, user.password);
-    if (!valid) throw new Error('Invalid credentials');
-
+    if (!valid) throw new Error('Invalid credentials'); 
+  
     const accessToken = this.jwtUtil.generateAccessToken({ user_id: user.user_id });
     const refreshToken = this.jwtUtil.generateRefreshToken({ user_id: user.user_id });
-
+  
+    // ✅ บันทึก refresh token ลงใน DB
     await this.prisma.users.update({
       where: { user_id: user.user_id },
       data: { refresh_token: refreshToken },
     });
-
+  
     return { access_token: accessToken, refresh_token: refreshToken };
   }
 

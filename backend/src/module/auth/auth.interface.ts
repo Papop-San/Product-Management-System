@@ -21,11 +21,10 @@ export class RegisterResponseDTO {
     user_id!: number;
 }
 
-export class LoginUserDTO {
-    emailOrUser!: string;
-    password!: string;
-
-}
+export interface LoginUserDTO {
+    emailOrUser: string;
+    password: string;
+  }
 
 export class LoginResponseDTO {
     access_token!: string;

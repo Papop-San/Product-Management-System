@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 
 export class JwtUtil {
-    private accessSecret = process.env.JWT_ACCESS_SECRET || 'access_secret';
-    private refreshSecret = process.env.JWT_REFRESH_SECRET || 'refresh_secret';
+    private accessSecret = process.env.ACCESS_TOKEN_SECRET || 'access_secret';
+    private refreshSecret = process.env.REFRESH_TOKEN_SECRET || 'refresh_secret';
 
 
     generateAccessToken(payload: object): string {
