@@ -1,13 +1,15 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import authRoutes from './module/auth/auth.routes';
 
 dotenv.config();
 
-const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello from server');
-});
+const app = express();
+app.use(express.json());
+
+
+app.use('/api/auth', authRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

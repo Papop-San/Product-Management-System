@@ -6,10 +6,127 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgresql" 
   url      = env("DATABASE_URL")
+}
+
+model Users {
+  user_id    Int       @id @default(autoincrement())
+  email      String    @unique
+  password   String
+  user_name  String    @unique
+  first_name String?
+  last_name  String?
+  phone      String?   @unique
+  gender     String?
+  birthday   DateTime?
+  refresh_token  String?
+  is_active  Boolean   @default(true)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+
+  roles      UserRole[]
+  carts      Cart[]
+  orders     Order[]
+}
+
+model Role {
+  role_id     Int        @id @default(autoincrement())
+  name        String     @unique
+  description String?
+
+  users       UserRole[]
+}
+
+model UserRole {
+  user_id Int
+  role_id Int
+
+  user   Users @relation(fields: [user_id], references: [user_id])
+  role   Role @relation(fields: [role_id], references: [role_id])
+
+  @@id([user_id, role_id])
+}
+
+model Category {
+  id_category Int         @id @default(autoincrement())
+  name        String?
+  parent_id   Int?
+  parent      Category?   @relation("SubCategories", fields: [parent_id], references: [id_category])
+  children    Category[]  @relation("SubCategories")
+  created_at  DateTime    @default(now())
+
+  products    Product[]
+}
+
+model Product {
+  id_product     Int       @id @default(autoincrement())
+  name           String?
+  description    String?
+  price          Int?
+  discount_price Int?
+  sku            String?   @unique
+  status         String?
+  brand_id       String?
+  stock_quantity Int?
+  weight_gram    Int?
+  star           Int?
+  image_url      String?
+  id_category    Int?
+
+  category       Category? @relation(fields: [id_category], references: [id_category])
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @default(now())
+
+  item_cart      ItemCart[]
+  order_items    OrderItem[]
+}
+
+model Cart {
+  id_cart    Int       @id @default(autoincrement())
+  user_id    Int
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+
+  user       Users      @relation(fields: [user_id], references: [user_id])
+  item_cart  ItemCart[]
+}
+
+model ItemCart {
+  id_itemcart Int      @id @default(autoincrement())
+  id_cart     Int
+  product_id  Int
+  quantity    Int
+
+  cart        Cart     @relation(fields: [id_cart], references: [id_cart])
+  product     Product  @relation(fields: [product_id], references: [id_product])
+}
+
+model Order {
+  id_order         Int        @id @default(autoincrement())
+  user_id          Int
+  status           String?
+  total_price      Int?
+  shipping_fee     Int?
+  shipping_address String?
+  paid             Boolean?
+  created_at       DateTime   @default(now())
+
+  user             Users       @relation(fields: [user_id], references: [user_id])
+  order_items      OrderItem[]
+}
+
+model OrderItem {
+  id_orderitem Int      @id @default(autoincrement())
+  id_order     Int
+  product_id   Int
+  quantity     Int
+  unit_price   Int
+  total_price  Int
+
+  order        Order    @relation(fields: [id_order], references: [id_order])
+  product      Product  @relation(fields: [product_id], references: [id_product])
 }
