@@ -6,18 +6,18 @@ export interface CreateUserDTO {
     last_name?: string;
     phone?: string;
     gender?: string;
-    birthday?: string;  // ISO date string
-}
-
-export interface UpdateUserDTO {
+    birthday?: string;
+  }
+  
+  export interface UpdateUserDTO {
     first_name?: string;
     last_name?: string;
     phone?: string;
     gender?: string;
     birthday?: string;
-}
-
-export interface UserResponseDTO {
+  }
+  
+  export interface UserResponseDTO {
     user_id: number;
     email: string;
     user_name: string;
@@ -27,4 +27,7 @@ export interface UserResponseDTO {
     gender?: string;
     birthday?: string;
     is_active: boolean;
-}
+    created_at: string;
+    updated_at: string;
+  }
+  

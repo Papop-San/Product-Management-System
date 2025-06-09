@@ -4,6 +4,8 @@ import cors from 'cors';
 
 import authRoutes from './module/auth/auth.routes';
 import userRoutes from './module/users/user.routes';
+import productRoutes from './module/products/product.routes'
+import catgoriesRoutes from './module/catagory/category.routes'
 
 dotenv.config();
 
@@ -19,6 +21,8 @@ app.use(cors({
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/product', productRoutes);
+app.use('/api/catagory', catgoriesRoutes)
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
