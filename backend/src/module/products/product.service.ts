@@ -54,9 +54,14 @@ export class ProductService {
 
     async getProductByName(name: string): Promise<Product | null> {
         return await prisma.product.findFirst({
-            where: { name }
+          where: {
+            name: {
+              contains: name, 
+              mode: 'insensitive',
+            },
+          },
         });
-    }
+      }
     async getAllProducts(): Promise<Product[]> {
         return await prisma.product.findMany();
     }

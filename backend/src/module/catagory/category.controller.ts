@@ -9,7 +9,7 @@ export class CategoryController {
   async getAll(req: Request, res: Response): Promise<void> {
     try {
       const categories = await categoryService.getAllCategories();
-      res.status(200).json({ message: 'OK', data: categories });
+      res.status(200).json({ categories });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
