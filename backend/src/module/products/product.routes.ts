@@ -8,9 +8,9 @@ const productController = new ProductController();
 router.get("/", productController.getAllProduct);
 router.get("/:name", productController.getProductByName);
 
-router.get('/:id', productController.getProductById);   
+router.get('/:id_product', productController.getProductById);   
 router.post('/', productController.createProduct);
-router.put('/:id', productController.updateProduct) ;
-router.delete('/:id' , productController.deleteProduct) 
+router.put('/:id_product', productController.updateProduct) ;
+router.delete('/:id_product' , productController.deleteProduct) 
 
 export default router;

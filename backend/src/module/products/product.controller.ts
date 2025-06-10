@@ -25,7 +25,8 @@ export class ProductController {
 
     getProductByName = async (req: Request , res: Response) => {
         try{
-            const result = await this.productService.getProductByName(req.body);
+            const name = req.query.name as string;
+            const result = await this.productService.getProductByName(name);
             res.status(201).json(result);
         }catch (error: any){
             res.status(400).json({error: error.message});
@@ -57,6 +58,7 @@ export class ProductController {
         try{
             const product_id = parseInt(req.params.id_product);
             const result = await this.productService.deleteProduct(product_id);
+            res.status(200).json({ message: 'Deleted this item already' });
         }catch (error: any){
             res.status(400).json({error: error.message})
         }
