@@ -5,6 +5,7 @@ import {
   UpdateCategoryDTO,
 } from './category.interface';
 
+
 const prisma = new PrismaClient();
 
 export class CategoryService {
@@ -19,7 +20,7 @@ export class CategoryService {
       if (!data.name) {
         throw new Error('Missing required field: name');
       }
-
+      // Check Unique parent Id
       if (data.parent_id) {
         const parentExists = await prisma.category.findUnique({
           where: { id_category: data.parent_id },
@@ -28,7 +29,7 @@ export class CategoryService {
           throw new Error(`Parent category with id ${data.parent_id} does not exist`);
         }
       }
-
+    
       const createdCategory = await prisma.category.create({
         data: {
           name: data.name,

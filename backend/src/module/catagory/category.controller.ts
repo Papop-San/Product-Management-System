@@ -9,6 +9,8 @@ export class CategoryController {
   async getAll(req: Request, res: Response): Promise<void> {
     try {
       const categories = await categoryService.getAllCategories();
+      
+      
       res.status(200).json({ categories });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -31,7 +33,9 @@ export class CategoryController {
     try {
       const data: CreateCategoryDTO[] = req.body;
       const created = await categoryService.createCategories(data);
-      res.status(201).json({ message: 'Created', data: created });
+
+
+      res.status(201).json({ message: created });
     } catch (error: any) {
       res.status(400).json({ message: error.message });
     }
@@ -54,9 +58,10 @@ export class CategoryController {
     try {
       const id = parseInt(req.params.id);
       await categoryService.deleteCategory(id);
-      res.status(204).send(); // No Content
+      res.status(200).json({ message: "Delete item already" });
     } catch (error: any) {
       res.status(400).json({ message: error.message });
     }
   }
+
 }

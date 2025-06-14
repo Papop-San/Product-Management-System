@@ -60,7 +60,7 @@ model Category {
   created_at  DateTime    @default(now())
 
   products    Product[]
-}
+} 
 
 model Product {
   id_product     Int       @id @default(autoincrement())
